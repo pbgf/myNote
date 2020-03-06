@@ -9,7 +9,7 @@ process.argv.forEach((val, index) => {
     console.log(`${index}: ${val}`);
 });
 let input_path = process.argv[2]
-let file = last(input_path.split('/'))
+let file = last(input_path.split('/')).replace(/\.html/,'')
 let out_path = path.join(__dirname, './md', file+'.md')
 let html = fs.readFileSync(input_path, 'utf8')
 
