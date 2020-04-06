@@ -93,4 +93,6 @@ function KMP(pat){
     }
 }
 ```
+--参考
 
+[leetcode题解](https://leetcode-cn.com/problems/implement-strstr/solution/kmp-suan-fa-xiang-jie-by-labuladong/)
