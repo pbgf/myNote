@@ -14,7 +14,7 @@ let out_path = path.join(__dirname, './md', file+'.md')
 let html = fs.readFileSync(input_path, 'utf8')
 
 let markdown = sitdown.HTMLToMD(html)
-//console.log(markdown)
+console.log(markdown)
 fs.writeFile(out_path, markdown, (err) => {
     if (err) throw err;
     console.log('文件已被保存');
