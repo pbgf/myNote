@@ -285,3 +285,5 @@ function workLoop(hasTimeRemaining, initialTime) {
   }
 }
 ```
+
+关于isHostCallbackScheduled和isPerformingWork，首先isHostCallbackScheduled比较好理解，会在requestHostCallback前标志为true，因为requestHostCallback是通过postmessage和onmessage执行的，这中间是有间隙的，完全又可能被重复执行，所以需要设计标识正在执行。而isPerformingWork呢，我们看到在workLoop之前会设置isPerformingWork为true，而try{...}finally{...}的finally中会改为false,所以他这里只能是防止同步任务重复调用workLoop，所以这里只能是一种情况——递归，即任务列表中有可能存在开启新的循环的子任务。
