@@ -6,3 +6,6 @@
 * 简单解释下代数效应，以及在react中的代数效应
   代数效应其实就是“可以像传递参数一样传递副作用”。而在react里，在类组件时代，虽然也可以用函数式组件，但是函数是没有状态的，为了实现状态，react通过 “暂停” “effect handler” "恢复" 来实现了useState ，让函数有了状态。光有了状态还不行，如果函数本身有副作用需要处理怎么办，所以react提供了“effect handler” 即 —— useEffect
   (代数效应和monad都是解决副作用的方法，他俩在语言层面的实现分别是OCaml5和haskell)
+
+其他：
+* react分为两大循环scheduler和reconciler。reconciler会通过scheduler来调度任务，其中的代码都在(packages/react-reconciler/src/SchedulerWithReactIntegration.new.js)中。

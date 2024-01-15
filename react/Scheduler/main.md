@@ -153,7 +153,7 @@ function handleMessage(e) {
 2. 稳定
 3. 兼容性好
 
-首先第一点，我们可以排除微任务，因为我们知道微任务是在本次事件循环的最后，那么执行完毕后浏览器才会渲染，所以为了不阻塞渲染，我们应该采用宏任务。宏任务的话，我们有多个选择：setTimeout、requestAnimationFrame、requestIdleCallback。首先setTimeout我们都知道，即使设置为0，也会随着任务的增加，慢慢从执行间隔1ms变到4ms、6ms，以及浏览器实现各有差异，所以可以排除掉。而requestAnimationFrame的触发间隔时间不确定，如果浏览器间隔了 10ms 才更新页面，那么这 10ms 就浪费了，也可以排除掉。最后是requestIdleCallback，在空闲状态下，requestIdleCallback(callback) 回调函数的执行间隔是 50ms（W3C规定），也就是 20FPS，1秒内执行20次，那么肯定也是不行的。所以最后只剩下了messageChannel，并且messageChannel的兼容性很好。
+首先第一点，我们可以排除微任务，因为我们知道一次循环可以简单的概括为 执行宏任务 => 执行微任务 => 渲染更新，如果是微任务那么并不能达到让出空闲让浏览器去执行更新UI，所以为了不阻塞渲染，我们应该采用宏任务，把更新放到下一次循环。宏任务的话，我们有多个选择：setTimeout、requestAnimationFrame、requestIdleCallback。首先setTimeout我们都知道，即使设置为0，也会随着任务的增加，慢慢从执行间隔1ms变到4ms、6ms，以及浏览器实现各有差异，所以可以排除掉。而requestAnimationFrame的触发间隔时间不确定，如果浏览器间隔了 10ms 才更新页面，那么这 10ms 就浪费了，也可以排除掉。最后是requestIdleCallback，在空闲状态下，requestIdleCallback(callback) 回调函数的执行间隔是 50ms（W3C规定），也就是 20FPS，1秒内执行20次，那么肯定也是不行的。所以最后只剩下了messageChannel，并且messageChannel的兼容性很好。
 
 ![](assets/20240101_173125_image.png)
 

@@ -107,7 +107,7 @@ export function updateContainer(
   if (callback !== null) {
     update.callback = callback;
   }
-
+  // 把更新加入到队列中 ，更新队列是链表实现
   enqueueUpdate(current, update);
   scheduleUpdateOnFiber(current, lane, eventTime);
 
