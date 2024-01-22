@@ -51,4 +51,3 @@ export function enqueueUpdate<State>(fiber: Fiber, update: Update<State>) {
 1. 更新队列包含一个 shared 属性，这个 shared 对象是一个共享队列，它实际上存储了所有的更新。
 2. update.next = pending.next; pending.next = update; 是经典的链表的插入新节点代码
 总结来说，enqueueUpdate 函数是 React 中处理组件状态更新的关键部分。它确保了所有的状态更新都能被正确地添加到组件的更新队列中，从而在未来的渲染周期中被处理。
-
