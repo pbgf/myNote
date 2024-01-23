@@ -86,7 +86,7 @@ const createProvider = <Value>(
       // 版本+1
       versionRef.current += 1;
       // runWithNormalPriority为react库中scheduler导出的方法
-      // 这里可以理解为 函数里的任务会被以普通的优先级添加到 react的scheduler队列中
+      // 这里可以理解为 函数里的更新任务(setState、dispatch等)会被以普通的优先级添加到 react的scheduler队列中
       runWithNormalPriority(() => {
         (contextValue.current as ContextValue<Value>)[CONTEXT_VALUE].l.forEach((listener) => {
           // 这里实际是dispatch({ n: versionRef.current, v: value }), 传入了新的版本和值
