@@ -47,3 +47,5 @@ commit阶段做的事主要是：
 2. 调用渲染器, 输出最终结果.
 3. 检测常规(异步)任务, 如果有则会发起异步调度
 4. 检测同步任务, 如果有则主动调用flushSyncCallbackQueue(无需再次等待scheduler调度), 再次进入fiber树构造循环
+
+![Alt text](image-2.png)
