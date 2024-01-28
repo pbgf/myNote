@@ -1,0 +1,1 @@
+reconciler协调阶段，主要是协调scheduler和react-dom协同工作的，比如接收一个更新(setState)开始，经过各种判断分支，如是否同步异步，更新优先级等等，最后决定任务该怎么执行，如对fiber树的构建和更新(其中涉及到诸多概念，如双缓存模型、链表、diff算法等)，对fiber树更新后怎么去通过react-dom更新到实际的dom。

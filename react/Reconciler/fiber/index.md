@@ -98,6 +98,9 @@ function performUnitOfWork(unitOfWork: Fiber): void {
 fiber树的构建过程在文档中已经有了很好的图解，这里不在赘述
 https://github.com/7kms/react-illustration-series/blob/main/docs/main/fibertree-create.md
 fiber的以下会经常看到的属性释义：
+
 1、stateNode 是 Fiber 节点的一个属性，它用来存储与该 Fiber 节点关联的实际 DOM 节点（对于原生 DOM 组件）或组件实例（对于类组件），对于函数组件为空。
+
 2、alternate指向当前页面正在使用的fiber节点(联想双缓存模型，即正在更新的fiber节点通过alternate指向页面正在使用的fiber结点)
+
 3、flags 属性是一个位字段（bit field），用于表示 Fiber 节点上的不同类型的工作或效果。具体见另一个md
