@@ -1,0 +1,3 @@
+如果调用了useState的更新函数，那么首先会创建一个update对象，描述优先级、action等信息(在传统模式下是同步优先级)，然后会通过scheduleUpdateOnFiber开始进入内部的 协调流程(稍后补充，可以见下面的图)，在这个流程中如果是函数式组件那么会调用renderWithHooks方法，该方法会重置上下文状态变量并调用组件函数进行一次rerender，在这次函数调用中，我们的useState会被再次调用(实际调用的内部函数是updateReducer)，会通过计算合并出最终的状态。
+![协调流程](../react/Reconciler/fiber/image-2.png)
+如果在一次事件处理函数中，连续调用了三次更新函数，那么并不会rerender三次，而是会往更新链表中推入三个update对象，在一次react的调度循环中完成 合并计算出最终的状态。
