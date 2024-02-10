@@ -1,3 +1,3 @@
 如果调用了useState的更新函数，那么首先会创建一个update对象，描述优先级、action等信息(在传统模式下是同步优先级)，同时推入到当前fiber的等待更新队列中，然后会通过scheduleUpdateOnFiber开始进入内部的 协调流程(稍后补充，可以见下面的图)，在这个流程中如果是函数式组件那么会调用renderWithHooks方法，该方法会重置上下文状态变量并调用组件函数进行一次rerender，在这次函数调用中，我们的useState会被再次调用(实际调用的内部函数是updateReducer)，会执行该fiber下的等待更新队列，合并计算出最终的状态，并返回，然后函数组件会继续往下执行。
 ![协调流程](../react/Reconciler/fiber/image-2.png)
-如果在一次事件处理函数中，连续调用了三次更新函数，那么并不会rerender三次(调度器中有相应代码防止重复调度)，而是会往更新链表中推入三个update对象(每一次dispatchAction 都会往对应fiber节点的pending队列中添加update对象)，在一次react的调度循环中完成 合并计算出最终的状态。
+如果在一次事件处理函数中，连续调用了三次更新函数，那么并不会rerender三次(因为在react18之前，都是同步更新，只会通过scheduler开启一个异步任务，所有后续setState都会合并到这一个异步任务中[源码](https://github1s.com/facebook/react/blob/v17.0.1/packages/react-reconciler/src/SchedulerWithReactIntegration.new.js#L144-L145))，而是会往更新链表中推入三个update对象(每一次dispatchAction 都会往对应fiber节点的pending队列中添加update对象)，在一次react的调度循环中完成 合并计算出最终的状态。
