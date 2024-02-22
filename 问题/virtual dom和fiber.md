@@ -14,6 +14,7 @@
 
 ### fiber
 
-在react16之后，有了fiber架构，他会在react elements基础上再转换为fiber树结构，方便实现并发模式。
+在react16之后，有了fiber架构，他会在react elements基础上再转换为fiber树结构，方便实现并发模式。本质上react从堆栈结构转换为了链表结构。
+fiber这个词在计算机领域出现，是90年代windows推出了协程的api，当时也取名叫fiber。但在react中，fiber背后的思想不是协程，而是代数效应，代数效应的特点有：中断、恢复、状态管理以及副作用的隔离。可以看到这些在react中都有体现。
 
 ![](https://7km.top/static/code2dom.98309914.png)
