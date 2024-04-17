@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <script>
+        function renderVDom(nodes) {
+        const fragment = document.createDocumentFragment();
+        for (let i=0;i<nodes.length;i++) {
+            // 如果是数字类型转化为字符串
+            if (typeof nodes[i] === "number") {
+                fragment.appendChild(String(nodes[i]));
+                continue;
+            }
+            // 字符串类型直接就是文本节点
+            if (typeof nodes[i] === "string") {
+                fragment.appendChild(document.createTextNode(nodes[i]));
+                continue;
+            }
+            const element = document.createElement(nodes[i].tag);
+            if (Object.prototype.toString.call(nodes[i].attrs) === '[object Object]') {
+                Object.keys(nodes[i].attrs)?.map(key => {
+                    element[key] = nodes[i].attrs[key];
+                });
+            }
+            if (nodes[i].children) {
+                element.appendChild(renderVDom(nodes[i].children));
+            }
+            fragment.appendChild(element);
+        }
+        return fragment;
+        }
+        function mountDom(nodes) {
+            document.body.appendChild(renderVDom(nodes));
+        }
+        mountDom([{
+  tag: 'DIV',
+  attrs:{
+  id:'app'
+  },
+  children: [
+    {
+      tag: 'SPAN',
+      children: [
+        { tag: 'A', children: [] },
+        'hasd'
+      ]
+    },
+    {
+      tag: 'SPAN',
+      children: [
+        { tag: 'A', children: [] },
+        { tag: 'A', children: [] }
+      ]
+    }
+  ]
+}]);
+    </script>
+  </body>
+</html>
