@@ -22,9 +22,14 @@
 #### vapor mode（signal）
 那么有没有能即保证细粒度的更新，又不会导致内存开销很大呢？有，那就是vue3的vapor mode(但是最开始提出这个的不是vue，而是solid或者svelte)，简单来说就是在编译阶段做更多的事来实现compile-to-real-dom-operations。
 
-### fiber
+### react是怎么解决性能问题的？
+
+#### fiber
 
 在react16之后，有了fiber架构，他会在react elements基础上再转换为fiber树结构，方便实现并发模式。本质上react从堆栈结构转换为了链表结构。
 fiber这个词在计算机领域出现，是90年代windows推出了协程的api，当时也取名叫fiber。但在react中，fiber背后的思想不是协程，而是代数效应，代数效应的特点有：中断、恢复、状态管理以及副作用的隔离。可以看到这些在react中都有体现。
 
 ![](https://7km.top/static/code2dom.98309914.png)
+
+#### 时间分片
+有了fiber的基础，那么react就实现了时间分片(可中断式渲染)，也就是react18中的并发模式。这种主要是来优化像虚拟dom的比对，因为像前面讲到的signal一样，react不支持也暂时不会支持，那么react的对比计算就是有可能耗时会大于一帧的时间的，所以react才想到中断式渲染，在一帧的末尾把时间交给浏览器去渲染。那么为什么vue3不需要时间切片呢，原因很简单，因为vue3有signal，且在vapor mode下 根本不再需要虚拟dom，性能更强了。关于这点vue有一个[rfc](https://github.com/vuejs/rfcs/issues/89)讨论了。
